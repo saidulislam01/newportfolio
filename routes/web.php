@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,8 @@ Route::get('/', [FrontendController::class, 'index'])->name('home');
 
 Route::get('/admin/dashboard', [BackendController::class, 'index'])->name('admin.dashboard');
 
-Route::get('/admin/main', [BackendController::class, 'index'])->name('admin.main');
+Route::get('/admin/main', [MainController::class, 'main'])->name('admin.main');
+Route::post('/admin/main', [MainController::class, 'update'])->name('admin.main.update');
 
 
 

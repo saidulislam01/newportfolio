@@ -11,10 +11,7 @@ class BackendController extends Controller
         return view('backend.index');
     }
 
-    public function main()
-    {
-        return view('backend.main.main');
-    }
+   
 
 
 
