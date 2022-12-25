@@ -28,8 +28,7 @@ use App\Http\Controllers\PortfoliosController;
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 
 Route::prefix('admin')->group(function(){
-
-Route::get('/admin/dashboard', [BackendController::class, 'index'])->name('admin.dashboard');
+Route::get('/dashboard', [BackendController::class, 'index'])->name('admin.dashboard');
 
 Route::get('/main', [MainController::class, 'main'])->name('admin.main');
 Route::post('/main', [MainController::class, 'update'])->name('admin.main.update');
@@ -47,6 +46,13 @@ Route::get('/portfolios/list', [PortfoliosController::class, 'show'])->name('adm
 Route::get('/portfolios/edit/{id}', [PortfoliosController::class, 'edit'])->name('admin.portfolios.edit');
 Route::post('/portfolios/update/{id}', [PortfoliosController::class, 'update'])->name('admin.portfolios.update');
 Route::delete('/portfolios/delete/{id}', [PortfoliosController::class, 'destroy'])->name('admin.portfolios.delete');
+
+Route::get('/about/create', [AboutController::class, 'create'])->name('admin.about.create');
+Route::post('/about/create', [AboutController::class, 'store'])->name('admin.about.store');
+Route::get('/about/list', [AboutController::class, 'show'])->name('admin.about.list');
+Route::get('/about/edit/{id}', [AboutController::class, 'edit'])->name('admin.about.edit');
+Route::post('/about/update/{id}', [AboutController::class, 'update'])->name('admin.about.update');
+Route::delete('/about/delete/{id}', [AboutController::class, 'destroy'])->name('admin.about.delete');
 
 });
 
