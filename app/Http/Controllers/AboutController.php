@@ -28,129 +28,109 @@ class AboutController extends Controller
         return view('backend.about.create');
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'title' => 'required|string',
-    //         'sub_title' => 'required|string',
-    //         'image' => 'required|image',
-    //         'thumbnail' => 'required|image',
-    //         'description' => 'required|string',
-    //         'client' => 'required|string',
-    //         'category' => 'required|string',
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'title1' => 'required|string',
+            'title2' => 'required|string',
+            'image' => 'required|image',
+            'description' => 'required|string',
+        ]);
 
-    //     ]);
+        $abouts = new About;
+        $abouts->title1 = $request->title1;
+        $abouts->title2 = $request->title2;
+        $abouts->description = $request->description;
 
-    //     $portfolios = new Portfolio;
-    //     $portfolios->title = $request->title;
-    //     $portfolios->sub_title = $request->sub_title;
-    //     $portfolios->description = $request->description;
-    //     $portfolios->client = $request->client;
-    //     $portfolios->category = $request->category;
+        $image = $request->file('image');
+        Storage::putFile('public/img/', $image);
+        $abouts->image = "storage/img/" . $image->hashName();
 
-    //     $image = $request->file('image');
-    //     Storage::putfile('public/img/', $image);
-    //     $portfolios->image = "storage/img/" . $image->hashName();
+        $abouts->save();
 
-    //     $thumbnail = $request->file('thumbnail');
-    //     Storage::putfile('public/img/', $thumbnail);
-    //     $portfolios->thumbnail = "storage/img/" . $thumbnail->hashName();
+        return redirect()->route('admin.about.create')->with('success','New About Created Successfully');
+    }
 
-    //     $portfolios->save();
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        $abouts = About::all();
+        return view('backend.about.list', compact('abouts'));
+    }
 
-    //     return redirect()->route('admin.portfolios.create')->with('success','New Portfolios Created Successfully');
-    // }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $abouts = About::find($id);
+        return view('backend.about.edit', compact('abouts'));
+    }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show()
-    // {
-    //     $portfolios = Portfolio::all();
-    //     return view('backend.portfolios.list', compact('portfolios'));
-    // }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     $portfolios = Portfolio::find($id);
-    //     return view('backend.portfolios.edit', compact('portfolios'));
-    // }
+        $this->validate($request, [
+            'title1' => 'required|string',
+            'title2' => 'required|string',
+            'description' => 'required|string',
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
+        ]);
 
-    //     $this->validate($request, [
-    //         'title' => 'required|string',
-    //         'sub_title' => 'required|string',
-    //         'description' => 'required|string',
-    //         'client' => 'required|string',
-    //         'category' => 'required|string',
+        $abouts = About::find($id);
+        $abouts->title1 = $request->title1;
+        $abouts->title2 = $request->title2;
+        $abouts->description = $request->description;
 
-    //     ]);
-
-    //     $portfolios = Portfolio::find($id);
-    //     $portfolios->title = $request->title;
-    //     $portfolios->sub_title = $request->sub_title;
-    //     $portfolios->description = $request->description;
-    //     $portfolios->client = $request->client;
-    //     $portfolios->category = $request->category;
-
-    //     if($request->file('image')){
-    //         $image = $request->file('image');
-    //     Storage::putfile('public/img/', $image);
-    //     $portfolios->image = "storage/img/" . $image->hashName();
-    //     }
-
-    //     if($request->file('thumbnail')){
-    //         $thumbnail = $request->file('thumbnail');
-    //     Storage::putfile('public/img/', $thumbnail);
-    //     $portfolios->thumbnail = "storage/img/" . $thumbnail->hashName();
-    //     }
+        if($request->file('image')){
+            $image = $request->file('image');
+        Storage::putFile('public/img/', $image);
+        $abouts->image = "storage/img/" . $image->hashName();
+        }
 
 
-    //     $portfolios->save();
 
-    //     return redirect()->route('admin.portfolios.list')->with('success','Portfolios Updated Successfully');
-    // }
+        $abouts->save();
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     //$portfolio = DB::table('portfolios')->where('id',$id)->delete();
+        return redirect()->route('admin.about.list')->with('success','About Updated Successfully');
+    }
 
-    //     $portfolios = Portfolio::find($id);
-    //     @unlink(public_path($portfolios->image));
-    //     @unlink(public_path($portfolios->thumbnail));
-    //     $portfolios->delete();
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //$portfolio = DB::table('portfolios')->where('id',$id)->delete();
+
+        $about = About::find($id);
+        @unlink(public_path($about->image));
+        $about->delete();
 
 
-    //     return redirect()->route('admin.portfolios.list')->with('success','Portfolios Deleted Successfully');
-    // }
+        return redirect()->route('admin.about.list')->with('success','About Deleted Successfully');
+    }
 }

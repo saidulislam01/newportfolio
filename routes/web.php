@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BackendController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\PortfoliosController;
@@ -56,6 +58,7 @@ Route::delete('/about/delete/{id}', [AboutController::class, 'destroy'])->name('
 
 });
 
+Route::post('/contact',[ContactController::class, 'store'])->name('contact.store');
 
 Auth::routes();
 

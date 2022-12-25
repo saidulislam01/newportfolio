@@ -56,11 +56,11 @@ class PortfoliosController extends Controller
         $portfolios->category = $request->category;
 
         $image = $request->file('image');
-        Storage::putfile('public/img/', $image);
+        Storage::putFile('public/img/', $image);
         $portfolios->image = "storage/img/" . $image->hashName();
 
         $thumbnail = $request->file('thumbnail');
-        Storage::putfile('public/img/', $thumbnail);
+        Storage::putFile('public/img/', $thumbnail);
         $portfolios->thumbnail = "storage/img/" . $thumbnail->hashName();
 
         $portfolios->save();
@@ -120,13 +120,13 @@ class PortfoliosController extends Controller
 
         if($request->file('image')){
             $image = $request->file('image');
-        Storage::putfile('public/img/', $image);
+        Storage::putFile('public/img/', $image);
         $portfolios->image = "storage/img/" . $image->hashName();
         }
 
         if($request->file('thumbnail')){
             $thumbnail = $request->file('thumbnail');
-        Storage::putfile('public/img/', $thumbnail);
+        Storage::putFile('public/img/', $thumbnail);
         $portfolios->thumbnail = "storage/img/" . $thumbnail->hashName();
         }
 

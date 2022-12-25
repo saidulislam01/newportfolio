@@ -73,22 +73,26 @@
                 <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
             <ul class="timeline">
-                <li>
-                    <div class="timeline-image"><img class="rounded-circle img-fluid"
-                            src="{{ asset('frontend/assets/img/about/1.jpg') }}" alt="..." /></div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>2009-2011</h4>
-                            <h4 class="subheading">Our Humble Beginnings</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut
-                                voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero
-                                unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="timeline-inverted">
+                @if (count($abouts) > 0)
+                    @foreach ($abouts as $about)
+                        <li>
+                            <div class="timeline-image"><img class="rounded-circle img-fluid" src="{{ url($about->image) }}"
+                                    alt="..." />
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>{{ $about->title1 }}</h4>
+                                    <h4 class="subheading">{{ $about->title1 }}</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">{{ $about->description }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                @endif
+
+                {{-- <li class="timeline-inverted">
                     <div class="timeline-image"><img class="rounded-circle img-fluid"
                             src="{{ asset('frontend/assets/img/about/2.jpg') }}" alt="..." /></div>
                     <div class="timeline-panel">
@@ -102,37 +106,8 @@
                                 unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <div class="timeline-image"><img class="rounded-circle img-fluid"
-                            src="{{ asset('frontend/assets/img/about/3.jpg') }}" alt="..." /></div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>December 2015</h4>
-                            <h4 class="subheading">Transition to Full Service</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut
-                                voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero
-                                unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="timeline-inverted">
-                    <div class="timeline-image"><img class="rounded-circle img-fluid"
-                            src="{{ asset('frontend/assets/img/about/4.jpg') }}" alt="..." /></div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>July 2020</h4>
-                            <h4 class="subheading">Phase Two Expansion</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut
-                                voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero
-                                unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                        </div>
-                    </div>
-                </li>
+                </li> --}}
+
                 <li class="timeline-inverted">
                     <div class="timeline-image">
                         <h4>
@@ -149,7 +124,7 @@
     </section>
 
     <!-- Clients-->
-    <div class="py-5">
+    {{-- <div class="py-5">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-3 col-sm-6 my-3">
@@ -174,7 +149,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Contact-->
     <section class="page-section" id="contact">
         <div class="container">
@@ -189,26 +164,27 @@
             <!-- To make this form functional, sign up at-->
             <!-- https://startbootstrap.com/solution/contact-forms-->
             <!-- to get an API token!-->
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+            <form id="contactForm" action="{{ route('contact.store') }}" method="POST">
+                @csrf
                 <div class="row align-items-stretch mb-5">
                     <div class="col-md-6">
                         <div class="form-group">
                             <!-- Name input-->
-                            <input class="form-control" id="name" type="text" placeholder="Your Name *"
-                                data-sb-validations="required" />
+                            <input class="form-control" id="name" name="name" type="text"
+                                placeholder="Your Name *" data-sb-validations="required" />
                             <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                         </div>
                         <div class="form-group">
                             <!-- Email address input-->
-                            <input class="form-control" id="email" type="email" placeholder="Your Email *"
-                                data-sb-validations="required,email" />
+                            <input class="form-control" id="email" name="email" type="email"
+                                placeholder="Your Email *" data-sb-validations="required,email" />
                             <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                             <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                         </div>
                         <div class="form-group mb-md-0">
                             <!-- Phone number input-->
-                            <input class="form-control" id="phone" type="tel" placeholder="Your Phone *"
-                                data-sb-validations="required" />
+                            <input class="form-control" id="phone" name="phone" type="tel"
+                                placeholder="Your Phone *" data-sb-validations="required" />
                             <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.
                             </div>
                         </div>
@@ -216,7 +192,8 @@
                     <div class="col-md-6">
                         <div class="form-group form-group-textarea mb-md-0">
                             <!-- Message input-->
-                            <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
+                            <textarea class="form-control" id="message" name="message" placeholder="Your Message *"
+                                data-sb-validations="required"></textarea>
                             <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                         </div>
                     </div>
@@ -227,11 +204,7 @@
                 <!-- has successfully submitted-->
                 <div class="d-none" id="submitSuccessMessage">
                     <div class="text-center text-white mb-3">
-                        <div class="fw-bolder">Form submission successful!</div>
-                        To activate this form, sign up at
-                        <br />
-                        <a
-                            href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                        <div class="fw-bolder">@include('alert.messages')</div>
                     </div>
                 </div>
                 <!-- Submit error message-->
@@ -242,8 +215,8 @@
                     <div class="text-center text-danger mb-3">Error sending message!</div>
                 </div>
                 <!-- Submit Button-->
-                <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton"
-                        type="submit">Send Message</button></div>
+                <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" type="submit">Send
+                        Message</button></div>
             </form>
         </div>
     </section>

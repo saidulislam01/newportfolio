@@ -2,60 +2,41 @@
 @section('content')
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Edit Portfolios</h1>
+            <h1 class="mt-4">Edit Abouts</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active">Edit</li>
             </ol>
-            <form action="{{ route('admin.portfolios.update', $portfolios->id) }}" method="POST"
-                enctype="multipart/form-data">
+            <form action="{{ route('admin.about.update', $abouts->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-3 mt-3">
-                        <h3>Project Image</h3>
-                        <img style="height: 30vh" src="{{ url($portfolios->image) }}" class="img-thumbnail">
+                        <h3>Image</h3>
+                        <img style="height: 30vh" src="{{ url($abouts->image) }}" class="img-thumbnail">
                         <input type="file" name="image" class="mt-3">
-                    </div>
-                    <div class="form-group col-md-3 mt-3">
-                        <h3>Project Thumbnail</h3>
-                        <img style="height: 20vh" src="{{ url($portfolios->thumbnail) }}" class="img-thumbnail">
-                        <input type="file" name="thumbnail" class="mt-3">
                     </div>
 
                     <div class="form-group col-md-4 mt-3">
                         <div class="mb-3">
                             <label for="title">
-                                <h3>Title</h3>
+                                <h3>Title 1</h3>
                             </label>
-                            <input type="text" class="form-control" id="titile" name="title"
-                                value="{{ $portfolios->title }}">
+                            <input type="text" class="form-control" id="titile1" name="title1"
+                                value="{{ $abouts->title1 }}">
                         </div>
                         <div class="mb-5">
                             <label for="sub_title">
-                                <h3>Sub Title</h3>
+                                <h3>Title 2</h3>
                             </label>
-                            <input type="text" class="form-control" id="sub_titile" name="sub_title"
-                                value="{{ $portfolios->sub_title }}">
+                            <input type="text" class="form-control" id="titile2" name="title2"
+                                value="{{ $abouts->title2 }}">
                         </div>
                     </div>
-                    <div class="form-group col-md-6 mt-3">
-                        <h3>Description</h3>
-                        <textarea class="form-control" name="description" rows="10">{{ $portfolios->description }}</textarea>
-                    </div>
+
                     <div class="form-group col-md-4 mt-3">
-                        <div class="mb-3">
-                            <label for="client">
-                                <h3>Client</h3>
-                            </label>
-                            <input type="text" class="form-control" id="client" name="client"
-                                value="{{ $portfolios->client }}">
-                        </div>
-                        <div class="mb-5">
-                            <label for="category">
-                                <h3>Category</h3>
-                            </label>
-                            <input type="text" class="form-control" id="category" name="category"
-                                value="{{ $portfolios->category }}">
+                        <div>
+                            <h3>Description</h3>
+                            <textarea class="form-control" name="description" rows="10">{{ $abouts->description }}</textarea>
                         </div>
                     </div>
                 </div>
